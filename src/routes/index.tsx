@@ -11,7 +11,7 @@ import { translate } from "~/api/translate";
 const QMonacoEditor = qwikify$(MonacoEditor, { eagerness: 'load'})
 const QButton = qwikify$(Button, { eagerness: 'hover'})
 const QLang = qwikify$(LangSelect, { eagerness: 'hover'})
-const QScrollArea = qwikify$(ScrollArea, { eagerness: 'hover'})
+const QScrollArea = qwikify$(ScrollArea, { eagerness: 'load'})
 
 export const useTranslateHtml = routeAction$(async (data) => {
   const lang = data.lang as string;
@@ -62,14 +62,12 @@ export default component$(() => {
           >Submit</QButton>
         </div>
 
-        <div>
+        <div class="max-h-32">
           {/* eslint-disable-next-line */}
-          <QScrollArea className='h-64 mt-2 w-full rounded-md bg-slate-950 p-4'>
-            <pre class='h-auto'>
-              <code class='text-white whitespace-normal'>
+          <QScrollArea className='h-auto mt-2 w-full rounded-md bg-slate-950 p-4'>
+              <code class='text-white whitespace-normal h-auto overflow-scroll'>
                 {removeHtmlHeadBodyTags(action.value?.translatedHtml)}
               </code>
-            </pre>
           </QScrollArea>
         </div>
       </div>
@@ -87,7 +85,7 @@ const removeHtmlHeadBodyTags = (htmlString: string | undefined): string => {
 }
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "HTML Tag Translator",
   meta: [
     {
       name: "description",
