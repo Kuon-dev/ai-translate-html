@@ -11,7 +11,7 @@ export async function translate(lang: string, htmlString: string, htmlTags: stri
 
   for (const tag of htmlTags) {
     $(tag).each((index, element) => {
-      let htmlContent = $(element).html();
+      const htmlContent = $(element).html();
       if (!htmlContent) return;
 
       const textNodes: { index: number; text: string }[] = [];
