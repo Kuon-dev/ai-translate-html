@@ -54,14 +54,14 @@ export default component$(() => {
           />
           <QMonacoEditor name="htmlString" defaultValue={editorValue.value} onValueChange$={(e)=> {editorValue.value = e}}/>
           <QButton onClick$={() => {
-            if (!selectLang.value) {
-              toast('Error')
-            }
-
-            action.submit({
-              htmlString: editorValue.value,
-              lang: selectLang.value,
-            })
+            // if (!selectLang.value) {
+            //   toast('Maintainance mode enabled, please come back later')
+            // }
+            toast('Maintainance mode enabled, please come back later')
+            // action.submit({
+            //   htmlString: editorValue.value,
+            //   lang: selectLang.value,
+            // })
           }}
           disabled={action.isRunning}
           >Submit</QButton>

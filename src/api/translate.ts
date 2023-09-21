@@ -33,7 +33,7 @@ export async function translate(lang: string, htmlString: string, htmlTags: stri
             messages: [
               {
                 role: "system",
-                content: `You will be provided with a sentence in English, and your task is to translate it into ${lang}`,
+                content: `You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry`,
               },
               {
                 role: "user",
