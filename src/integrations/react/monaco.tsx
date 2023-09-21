@@ -17,7 +17,7 @@ const MonacoEditor: React.FC<Props> = ({ defaultValue, onValueChange }) => {
   return (
     <Editor
       height="80vh"
-      language="javascript"
+      language="html"
       theme="vs-dark"
       defaultValue={defaultValue}
       onChange={handleEditorChange}

@@ -41,7 +41,10 @@ export default component$(() => {
     <>
       <div class="container mt-5">
         <div class="flex flex-col gap-5">
-          {action.value?.fail && action.value.message}
+          <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Translate your html content</h1>
+          <p class="text-red-500">
+            {action.value?.fail && action.value.message}
+          </p>
           <QLang
             options={languages}
             placeholder="Select a language"
