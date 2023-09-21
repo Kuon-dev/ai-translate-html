@@ -54,7 +54,9 @@ export default component$(() => {
               htmlString: editorValue.value,
               lang: selectLang.value,
             })
-          }}>Submit</QButton>
+          }}
+          disabled={action.isRunning}
+          >Submit</QButton>
         </div>
 
         <div>
@@ -73,9 +75,12 @@ export default component$(() => {
 });
 
 const removeHtmlHeadBodyTags = (htmlString: string | undefined): string => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString ?? '', "text/html");
-  return doc.body.innerHTML;
+  if (!htmlString) return ''
+  const bodyMatch = htmlString.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  if (bodyMatch && bodyMatch[1]) {
+    return bodyMatch[1];
+  }
+  return htmlString;
 }
 
 export const head: DocumentHead = {
