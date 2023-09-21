@@ -1,7 +1,7 @@
 import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
 import { qwikify$ } from "@builder.io/qwik-react";
-import { Toaster } from "~/integrations/shadcn/ui/toaster";
+import { Toaster } from "sonner";
 
 const QToaster = qwikify$(Toaster, { eagerness: 'load'});
 

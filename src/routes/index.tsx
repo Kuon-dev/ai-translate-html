@@ -7,6 +7,7 @@ import { qwikify$ } from '@builder.io/qwik-react'
 import { Button } from "~/integrations/shadcn/ui/button";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { translate } from "~/api/translate";
+import { toast } from "sonner";
 
 const QMonacoEditor = qwikify$(MonacoEditor, { eagerness: 'load'})
 const QButton = qwikify$(Button, { eagerness: 'hover'})
@@ -53,6 +54,10 @@ export default component$(() => {
           />
           <QMonacoEditor name="htmlString" defaultValue={editorValue.value} onValueChange$={(e)=> {editorValue.value = e}}/>
           <QButton onClick$={() => {
+            if (!selectLang.value) {
+              toast('Error')
+            }
+
             action.submit({
               htmlString: editorValue.value,
               lang: selectLang.value,
