@@ -43,4 +43,5 @@ export const languages = [
   { label: 'Chinese (Traditional)', value: 'chinese traditional (zh-TW)' },
   { label: 'Vietnamese', value: 'vietnam (vi)' },
   { label: 'Thai', value: 'thai (th)' },
+  { label: 'Malay', value: 'malay (bm)' },
 ];

@@ -33,11 +33,11 @@ export async function translate(lang: string, htmlString: string, htmlTags: stri
             messages: [
               {
                 role: "system",
-                content: `You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry`,
+                content: `You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry. Provide only translated text. No elaboration.`,
               },
               {
                 role: "user",
-                content: `Translate '${text}' into ${lang}. Provide only the translated text. No elaboration.`,
+                content: `Translate '${text}' into ${lang}.`,
               },
             ],
           }).then((response) => {
