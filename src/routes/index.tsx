@@ -8,14 +8,28 @@ import { Button } from "~/integrations/shadcn/ui/button";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { translate } from "~/api/translate";
 import { toast } from "sonner";
-import axios from "axios"
 import cheerio from "cheerio";
 import { useDebounce } from "~/hooks/useDebounce";
+import { encodingForModel, type TiktokenModel } from "js-tiktoken";
 
 const QMonacoEditor = qwikify$(MonacoEditor, { eagerness: 'load'})
 const QButton = qwikify$(Button, { eagerness: 'hover'})
 const QLang = qwikify$(LangSelect, { eagerness: 'hover'})
 const QScrollArea = qwikify$(ScrollArea, { eagerness: 'load'})
+
+export const useTokenCounter = routeAction$(async(data) => {
+  const enc = encodingForModel("gpt-4" as TiktokenModel);
+
+  let totalTokens: number = 0;
+  for (const text of data.textNodes as any[]){
+    const tokenCount = enc.encode(text.text).length;
+    const promptCount = enc.encode('You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry. Provide only translated text. No elaboration.').length;
+      totalTokens += (tokenCount + promptCount)
+  }
+  return {
+     totalTokens
+  }
+})
 
 export const useTranslateHtml = routeAction$(async (data) => {
   const lang = data.lang as string;
@@ -39,8 +53,11 @@ export const useTranslateHtml = routeAction$(async (data) => {
 export default component$(() => {
   const editorValue = useSignal('')
   const selectLang = useSignal<string>('')
+
   const action = useTranslateHtml();
-  const tokenCount = useSignal(0)
+  const counter = useTokenCounter();
+
+  const tokenCount = useSignal<number>(0)
   const debouncedSig = useDebounce(editorValue, 500);
   const htmlTags = ['h1', 'p', 'span', 'a', 'div', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong']
 
@@ -69,10 +86,8 @@ export default component$(() => {
             });
         });
       }
-      const token = await axios.post("/api/token-counter/", {
-        textNodes: textNodes
-      }).then(res => res.data.totalTokens)
-      tokenCount.value = token
+      const token = await counter.submit({textNodes})
+      tokenCount.value = (token.value.totalTokens)
     }
     catch(e) {
       toast(JSON.stringify(e, null, 2))
