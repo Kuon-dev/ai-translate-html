@@ -1,6 +1,5 @@
 import { type RequestHandler } from "@builder.io/qwik-city";
 import { encodingForModel, type TiktokenModel } from "js-tiktoken";
-import cheerio from "cheerio";
 
 type CounterBody = {
   textNodes: any[]
