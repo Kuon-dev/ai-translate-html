@@ -9,6 +9,8 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { translate } from "~/api/translate";
 import { toast } from "sonner";
 import axios from "axios"
+import cheerio from "cheerio";
+import { useDebounce } from "~/hooks/useDebounce";
 
 const QMonacoEditor = qwikify$(MonacoEditor, { eagerness: 'load'})
 const QButton = qwikify$(Button, { eagerness: 'hover'})
@@ -39,16 +41,36 @@ export default component$(() => {
   const selectLang = useSignal<string>('')
   const action = useTranslateHtml();
   const tokenCount = useSignal(0)
+  const debouncedSig = useDebounce(editorValue, 500);
   const htmlTags = ['h1', 'p', 'span', 'a', 'div', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong']
 
   useVisibleTask$(async({track}) => {
-    track(() => editorValue.value)
-    if (!editorValue.value) return;
+    track(() => debouncedSig.value)
+    if (!debouncedSig.value) return;
     try {
+      const $ = cheerio.load(editorValue.value);
+      // const allChainedPromises: Promise<void>[] = [];
+      const textNodes: { index: number; text: string }[] = [];
+
+      for (const tag of htmlTags) {
+        $(tag).each((index, element) => {
+          const htmlContent = $(element).html();
+          if (!htmlContent) return;
+
+          $(element)
+            .contents()
+            .each((i, el) => {
+              if (el.type === "text") {
+                const text = $(el).text().trim();
+                if (text) {
+                  textNodes.push({ index: i, text });
+                }
+              }
+            });
+        });
+      }
       const token = await axios.post("/api/token-counter/", {
-        model: "gpt-4",
-        htmlTags: htmlTags,
-        htmlString: editorValue.value
+        textNodes: textNodes
       }).then(res => res.data.totalTokens)
       tokenCount.value = token
     }
@@ -73,11 +95,10 @@ export default component$(() => {
             onChange$={(lang: string) => {selectLang.value = lang}}
           />
             <div>
-               <p>Token count: {tokenCount}</p>
-            <p>Estimate cost: RM{(tokenCount.value / 1000 ) * 0.0015 * 4.15 * 2}</p>
-
+              <p>Token count: {tokenCount}</p>
+              <p>Estimate cost: RM{(tokenCount.value / 1000 ) * 0.0015 * 4.15 * 2}</p>
             </div>
-                     </div>
+          </div>
           <QMonacoEditor name="htmlString" defaultValue={editorValue.value} onValueChange$={(e)=> {editorValue.value = e}}/>
           <QButton onClick$={() => {
             // if (!selectLang.value) {
