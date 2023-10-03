@@ -10,7 +10,7 @@ import { translate } from "~/api/translate";
 import { toast } from "sonner";
 import cheerio from "cheerio";
 import { useDebounce } from "~/hooks/useDebounce";
-import { encodingForModel, type TiktokenModel } from "js-tiktoken";
+// import { encodingForModel, type TiktokenModel } from "js-tiktoken";
 
 const QMonacoEditor = qwikify$(MonacoEditor, { eagerness: 'load'})
 const QButton = qwikify$(Button, { eagerness: 'hover'})
@@ -18,14 +18,14 @@ const QLang = qwikify$(LangSelect, { eagerness: 'hover'})
 const QScrollArea = qwikify$(ScrollArea, { eagerness: 'load'})
 
 export const useTokenCounter = routeAction$(async(data) => {
-  const enc = encodingForModel("gpt-4" as TiktokenModel);
+  // const enc = encodingForModel("gpt-4" as TiktokenModel);
 
   let totalTokens: number = 0;
-  for (const text of data.textNodes as any[]){
-    const tokenCount = enc.encode(text.text).length;
-    const promptCount = enc.encode('You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry. Provide only translated text. No elaboration.').length;
-      totalTokens += (tokenCount + promptCount)
-  }
+  // for (const text of data.textNodes as any[]){
+  //   const tokenCount = enc.encode(text.text).length;
+  //   const promptCount = enc.encode('You will be provided with a sentence in English, and your task is to translate it into ${lang} in the context of a fintech industry. Provide only translated text. No elaboration.').length;
+  //     totalTokens += (tokenCount + promptCount)
+  // }
   return {
      totalTokens
   }
