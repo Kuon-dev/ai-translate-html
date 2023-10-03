@@ -9,13 +9,18 @@ import wasm from "vite-plugin-wasm";
 export default defineConfig(() => {
   return {
     build: {
+      rollupOptions: {
+        output: {
+          format: "es" as any
+        }
+      },
       target: 'esnext'
     },
-  esbuild: {
-    supported: {
-      'top-level-await': true
+    esbuild: {
+      supported: {
+        'top-level-await': true
+      },
     },
-  },
     plugins: [
       qwikCity(),
       qwikVite(),
