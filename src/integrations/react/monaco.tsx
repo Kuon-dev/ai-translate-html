@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
-import React from 'react';
-import Editor from '@monaco-editor/react';
+import React from "react";
+import Editor from "@monaco-editor/react";
 
 interface Props {
   name: string;
@@ -9,7 +9,6 @@ interface Props {
 }
 
 const MonacoEditor: React.FC<Props> = ({ defaultValue, onValueChange }) => {
-
   const handleEditorChange = (newValue: any) => {
     onValueChange(newValue);
   };

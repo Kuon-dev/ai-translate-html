@@ -117,9 +117,9 @@ This starter site is configured to deploy to [Netlify Edge Functions](https://do
 The [Netlify CLI](https://docs.netlify.com/cli/get-started/) can be used to preview a production build locally. To do so: First build your site, then to start a local server, run:
 
 1. Install Netlify CLI globally `npm i -g netlify-cli`.
-2. Build your site with both ssr and static `npm run build`.
-3. Start a local server with `npm run serve`.
-   In this project, `npm run serve` uses the `netlify dev` command to spin up a server that can handle Netlify's Edge Functions locally.
+2. Build your site with both ssr and static `pnpm build`.
+3. Start a local server with `pnpm serve`.
+   In this project, `pnpm serve` uses the `netlify dev` command to spin up a server that can handle Netlify's Edge Functions locally.
 4. Visit [http://localhost:8888/](http://localhost:8888/) to check out your site.
 
 ### Edge Functions Declarations
@@ -172,3 +172,13 @@ netlify deploy --build
 You must use the `--build` flag whenever you deploy. This ensures that the Edge Functions that this starter site relies on are generated and available when you deploy your site.
 
 Add `--prod` flag to deploy to production.
+
+## Express Server
+
+This app has a minimal [Express server](https://expressjs.com/) implementation. After running a full build, you can preview the build using the command:
+
+```
+pnpm serve
+```
+
+Then visit [http://localhost:8080/](http://localhost:8080/)

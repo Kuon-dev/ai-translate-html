@@ -1,11 +1,8 @@
-import { type Signal, useSignal, useTask$ } from '@builder.io/qwik';
+import { type Signal, useSignal, useTask$ } from "@builder.io/qwik";
 
-export function useDebounce(
-  signal: Signal,
-  milliSeconds: number,
-) {
+export function useDebounce(signal: Signal, milliSeconds: number) {
   // create the debounced Signal
-  const debouncedSig = useSignal('');
+  const debouncedSig = useSignal("");
 
   useTask$(({ track, cleanup }) => {
     // track the signal

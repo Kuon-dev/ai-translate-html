@@ -1,5 +1,13 @@
 /** @jsxImportSource react */
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "~/integrations/shadcn/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "~/integrations/shadcn/ui/select";
 
 interface SelectProps {
   options: { label: string; value: string }[];
@@ -39,9 +47,10 @@ export default function CustomSelect({
 
 export const languages = [
   // { label: 'English', value: 'english (en)' },
-  { label: 'Chinese (Simplified)', value: 'chinese (zh)' },
-  { label: 'Chinese (Traditional)', value: 'chinese traditional (zh-TW)' },
-  { label: 'Vietnamese', value: 'vietnam (vi)' },
-  { label: 'Thai', value: 'thai (th)' },
-  { label: 'Malay', value: 'malay (bm)' },
+  { label: "Chinese (Simplified)", value: "chinese (zh)" },
+  { label: "Chinese (Traditional)", value: "chinese traditional (zh-TW)" },
+  { label: "Japan", value: "japan (JP)" },
+  { label: "Vietnamese", value: "vietnam (vi)" },
+  { label: "Thai", value: "thai (th)" },
+  { label: "Malay", value: "malay (bm)" },
 ];
